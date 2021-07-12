@@ -1,0 +1,18 @@
+
+
+# Pure
+[array]$pure_historical_capacity_usage_7days_formatted = $pure_historical_capacity_usage_7days_data |  Select-Object @{name = 'Array'; e = {$Psitem.hostname }},
+                                                    @{name = 'DC'; e = {$Deviceinscope.DC }},
+                                                    @{name = 'BU'; e = {$Deviceinscope.BU }},
+                                                    @{name = 'IP'; e = {$Deviceinscope.IP }},
+                                                    @{name = 'Total Space (TB)'; e = {“{0:N2}”-f (($psitem.capacity)/1tb) }},
+                                                    @{name = 'Free Space (TB)'; e = {“{0:N2}”-f (($psitem.capacity - $psitem.Volumes)/1tb)  }},
+                                                    @{name = $ArrayName+'Used Space (TB)'; e = {“{0:N2}”-f (($psitem.Volumes)/1tb) }},
+                                                    @{name = 'Subscribed Space (TB)'; e = { “{0:N2}”-f  (($psitem.total)/1tb) }},
+                                                    @{name = 'Free Percentage'; e = {  “{0:N2}”-f  ((($psitem.capacity - $psitem.Volumes)/$psitem.capacity*100))}},
+                                                    @{ Name = 'Used Percentage'; Expression = { “{0:N2}” -f (($psitem.Volumes)/ ($psitem.capacity)*100) }},
+                                                    @{ Name = 'Subscriber Percentage'; Expression = { “{0:N2}” -f ( ($psitem.total)/($psitem.capacity)*100)}},
+                                                    @{Name = 'time'; e = {$_.time}}
+                                                    
+                                                    
+                                                    
